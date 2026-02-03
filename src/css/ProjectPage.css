@@ -1,6 +1,8 @@
+/* === Layout === */
+
 .projects-page {
     padding: 24px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -9,22 +11,38 @@
     margin-bottom: 20px;
 }
 
+/* === Filter === */
 
+.filters {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
 
-/*Noch die Farben ändern*/
-/* 🔹 Featured Card */
+.filters select {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #0a7a3d;
+    background: white;
+    color: #0a7a3d;
+    cursor: pointer;
+}
+
+/* === Featured Projekt === */
 
 .featured-card {
+    width: 100%;
     margin-bottom: 32px;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 .featured-image {
-    position: relative;
-    height: 320px;
-    border-radius: 16px;
+    height: 350px;
     background-size: cover;
     background-position: center;
-    overflow: hidden;
+    position: relative;
 }
 
 .featured-content {
@@ -38,24 +56,24 @@
             rgba(0, 0, 0, 0.65),
             rgba(0, 0, 0, 0.05)
     );
-    color: #fff;
+    color: white;
 }
 
 .featured-content h2 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 8px;
 }
 
 .featured-content p {
-    max-width: 600px;
+    max-width: 700px;
     margin-bottom: 12px;
 }
 
-/* 🔹 Grid */
+/* === Grid === */
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
@@ -68,7 +86,7 @@
 }
 
 .card-image {
-    height: 160px;
+    height: 180px;
     background-size: cover;
     background-position: center;
 }
@@ -88,7 +106,7 @@
     margin-bottom: 10px;
 }
 
-/* 🔹 Buttons */
+/* === Buttons === */
 
 .details-btn {
     border: none;
@@ -109,7 +127,7 @@
     background: #086a35;
 }
 
-/* 🔹 States */
+/* === States === */
 
 .loading {
     padding: 40px;
