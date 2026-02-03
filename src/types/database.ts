@@ -6,6 +6,10 @@ export type Project = {
     status: string;
     created_at: string;
     updated_at: string;
-
     image_url?: string | null;
+};
+
+export type Category = {
+    id: number;
+    name: string;
 };

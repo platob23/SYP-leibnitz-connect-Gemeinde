@@ -1,81 +1,85 @@
 import { useEffect, useState } from "react";
-import type { Project } from "../types/database";
-import { getProjects } from "../api/projects";
-import "../css/ProjectPage.css"
-import Filters from "../components/Filters.tsx";
-import Navbar from "../components/Navbar.tsx"
+import {getCategories, getProjects} from "../api/projects";
+import type { Project, Category } from "../types/database";
 
+import Navbar from "../components/Navbar";
+import Filters from "../components/Filters";
+import AllProjectsButton from "../components/AllProjectsButton";
 
-const DEFAULT_IMAGE =
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop";
+import "../css/project-page.css"
+import ProjectsList from "../components/ProjectList.tsx";
+
 export default function ProjectsPage() {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
-        getProjects()
-            .then(setProjects)
-            .catch((err) => {
-                console.error(err);
-                setError("Fehler beim Laden");
+        Promise.all([getProjects(), getCategories()])
+            .then(([p, c]) => {
+                setProjects(p);
+                setCategories(c);
             });
     }, []);
 
-    if (error) return <p className="error">{error}</p>;
     if (projects.length === 0) return <p className="loading">Lade Projekte …</p>;
 
     const [featured, ...rest] = projects;
 
-    const categories = Array.from(new Set(projects.map(p => p.category_id.toString())));
-    const dates = Array.from(new Set(projects.map(p => new Date(p.created_at).toLocaleDateString("de-DE"))));
-
-    const filteredProjects = rest.filter(p => {
-        let ok = true;
-        if (selectedCategory) ok = ok && p.category_id.toString() === selectedCategory;
-        if (selectedDate) ok = ok && new Date(p.created_at).toLocaleDateString("de-DE") === selectedDate;
-        return ok;
+    const filtered = rest.filter(p => {
+        if (selectedCategory && p.category_id !== selectedCategory) return false;
+        if (
+            selectedDate &&
+            new Date(p.created_at).toLocaleDateString("de-DE") !== selectedDate
+        ) return false;
+        return true;
     });
 
-    const getImage = (p: Project) =>
-        p.image_url && p.image_url.trim() !== "" ? p.image_url : DEFAULT_IMAGE;
+    const visible = showAll ? filtered : filtered.slice(0, 4);
 
     return (
-        <div className="projects-page">
-            <h1>Projekte & Entwicklungen in Leibnitz</h1>
+        <>
+            <Navbar />
 
-            <Filters
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-                dates={dates}
-                selectedDate={selectedDate}
-                onSelectDate={setSelectedDate}
-            />
+            <div className="projects-page">
+                <h1>Projekte & Entwicklungen in Leibnitz</h1>
 
-            <div className="featured-card">
-                <div className="featured-image" style={{ backgroundImage: `url(${getImage(featured)})` }}>
-                    <div className="featured-content">
-                        <h2>{featured.titel}</h2>
-                        <p>{featured.text?.substring(0, 160)}…</p>
-                        <button className="details-btn">Mehr Details →</button>
-                    </div>
-                </div>
-            </div>
+                <Filters
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    onSelectCategory={setSelectedCategory}
+                    dates={[...new Set(projects.map(p =>
+                        new Date(p.created_at).toLocaleDateString("de-DE")
+                    ))]}
+                    selectedDate={selectedDate}
+                    onSelectDate={setSelectedDate}
+                />
 
-            <div className="projects-grid">
-                {filteredProjects.map((p) => (
-                    <div key={p.id} className="project-card">
-                        <div className="card-image" style={{ backgroundImage: `url(${getImage(p)})` }} />
-                        <div className="card-content">
-                            <h3>{p.titel}</h3>
-                            <p className="date">{new Date(p.created_at).toLocaleDateString("de-DE")}</p>
-                            <button className="details-btn small">Mehr Details →</button>
+                {/* Featured */}
+                <div className="featured-card">
+                    <div
+                        className="featured-image"
+                        style={{ backgroundImage: `url(${featured.image_url})` }}
+                    >
+                        <div className="featured-content">
+                            <h2>{featured.titel}</h2>
+                            <p>{featured.text.substring(0, 160)}…</p>
                         </div>
                     </div>
-                ))}
+                </div>
+
+                <div className="projects-header">
+                    <span />
+                    <AllProjectsButton
+                        show={!showAll && filtered.length > 4}
+                        onClick={() => setShowAll(true)}
+                    />
+                </div>
+
+                <ProjectsList projects={visible} />
             </div>
-        </div>
+        </>
     );
 }

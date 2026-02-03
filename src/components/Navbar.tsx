@@ -1,12 +1,12 @@
-import "../css/Navbar.css"
+import "../css/Navbar.css";
 
 export default function Navbar() {
     return (
         <header className="navbar">
             <div className="navbar-inner">
                 <div className="logo">
-                    <span className="logo-bold">stadtgemeinde</span>
-                    <span className="logo-name">leibnitz</span>
+                    <span className="logo-light">stadtgemeinde</span>
+                    <span className="logo-bold">leibnitz</span>
                 </div>
 
                 <nav>
