@@ -1,0 +1,121 @@
+.projects-page {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.projects-page h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+
+
+/*Noch die Farben ändern*/
+/* 🔹 Featured Card */
+
+.featured-card {
+    margin-bottom: 32px;
+}
+
+.featured-image {
+    position: relative;
+    height: 320px;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.featured-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.65),
+            rgba(0, 0, 0, 0.05)
+    );
+    color: #fff;
+}
+
+.featured-content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.featured-content p {
+    max-width: 600px;
+    margin-bottom: 12px;
+}
+
+/* 🔹 Grid */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-content {
+    padding: 14px;
+}
+
+.card-content h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+.card-content .date {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* 🔹 Buttons */
+
+.details-btn {
+    border: none;
+    background: #0a7a3d;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.details-btn.small {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+.details-btn:hover {
+    background: #086a35;
+}
+
+/* 🔹 States */
+
+.loading {
+    padding: 40px;
+}
+
+.error {
+    color: red;
+    padding: 40px;
+}
