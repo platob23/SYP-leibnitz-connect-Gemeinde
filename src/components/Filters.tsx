@@ -1,10 +1,10 @@
 import type { Category } from "../types/database";
-import "../css/project-page.css";
 
-type Props = {
+type FiltersProps = {
     categories: Category[];
     selectedCategory: number | null;
     onSelectCategory: (id: number | null) => void;
+
     dates: string[];
     selectedDate: string | null;
     onSelectDate: (date: string | null) => void;
@@ -16,31 +16,42 @@ export default function Filters({
                                     onSelectCategory,
                                     dates,
                                     selectedDate,
-                                    onSelectDate,
-                                }: Props) {
+                                    onSelectDate
+                                }: FiltersProps) {
     return (
         <div className="filters">
+            {/* KATEGORIEN SELECT */}
             <select
-                value={selectedCategory ?? ""}
-                onChange={(e) =>
-                    onSelectCategory(e.target.value ? Number(e.target.value) : null)
-                }
+                value={selectedCategory || ""}
+                onChange={(e) => {
+                    const val = e.target.value;
+                    onSelectCategory(val ? Number(val) : null);
+                }}
             >
-                <option value="">Alle Kategorien</option>
-                {categories.map(c => (
-                    <option key={c.id} value={c.id}>
-                        {c.name}
+                <option value="">Kategorie</option>
+
+                {/* DAS HIER HAT GEFEHLT: Die Schleife über die Kategorien */}
+                {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                        {cat.name}
                     </option>
                 ))}
             </select>
 
+            {/* DATUM SELECT */}
             <select
-                value={selectedDate ?? ""}
-                onChange={(e) => onSelectDate(e.target.value || null)}
+                value={selectedDate || ""}
+                onChange={(e) => {
+                    const val = e.target.value;
+                    onSelectDate(val === "" ? null : val);
+                }}
             >
-                <option value="">Alle Daten</option>
-                {dates.map(d => (
-                    <option key={d} value={d}>{d}</option>
+                <option value="">Datum</option>
+
+                {dates.map((date) => (
+                    <option key={date} value={date}>
+                        {date}
+                    </option>
                 ))}
             </select>
         </div>

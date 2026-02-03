@@ -15,6 +15,8 @@
 .projects-page h1 {
     font-size: 2.2rem;
     margin-bottom: 12px;
+    /* Damit man den Titel auf dem dunklen Hintergrund sieht: */
+    color: #ffffff;
 }
 
 .filters {
@@ -65,6 +67,7 @@
             rgba(255, 255, 255, 0.3)
     );
 
+    /* Hier war es schon schwarz, das passt: */
     color: #000;
 }
 
@@ -72,11 +75,13 @@
     font-size: 2.1rem;
     font-weight: 600;
     margin-bottom: 10px;
+    color: #000; /* Sicherheitshalber explizit schwarz */
 }
 
 .featured-content p {
     max-width: 720px;
     font-size: 1rem;
+    color: #333; /* Dunkelgrau für Text */
 }
 
 /* ===============================
@@ -137,14 +142,16 @@
     padding: 14px;
 }
 
+/* WICHTIG: Hier die Farbe auf Schwarz geändert */
 .card-content h3 {
     font-size: 1rem;
     margin-bottom: 6px;
+    color: #1a1a1a; /* Dunkles Grau/Schwarz für den Titel */
 }
 
 .date {
     font-size: 0.85rem;
-    color: #555;
+    color: #555; /* Mittelgrau, ist auf Weiß gut lesbar */
     margin-bottom: 10px;
 }
 
@@ -178,8 +185,9 @@
 .loading,
 .error {
     padding: 40px;
+    color: white; /* Weißer Text für Ladeanzeige auf dunklem Hintergrund */
 }
 
 .error {
-    color: red;
+    color: #ff6b6b;
 }

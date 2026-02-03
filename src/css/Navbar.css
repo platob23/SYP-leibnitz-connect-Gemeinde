@@ -1,19 +1,24 @@
 .navbar {
     background: #0a7a3d;
     padding: 14px 24px;
+    width: 100%;
+    box-sizing: border-box; /* Wichtig damit Padding nicht die Breite sprengt */
 }
 
 .navbar-inner {
-    max-width: 1400px;
+    /* Hier: Keine feste Breite mehr, sondern 100% */
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .logo {
     color: white;
     font-size: 1.4rem;
+    white-space: nowrap;
 }
 
 .logo-light {
@@ -25,13 +30,35 @@
     font-weight: 700;
 }
 
+nav {
+    display: flex;
+    align-items: center;
+}
+
 nav a {
     color: white;
     text-decoration: none;
     margin-left: 24px;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 nav a.active {
     text-decoration: underline;
+}
+
+/* Mobile Anpassung */
+@media (max-width: 768px) {
+    .navbar-inner {
+        flex-direction: column;
+        gap: 16px;
+    }
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    nav a {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
 }

@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
-import {getCategories, getProjects} from "../api/projects";
+import { getCategories, getProjects } from "../api/projects";
 import type { Project, Category } from "../types/database";
 
 import Navbar from "../components/Navbar";
 import Filters from "../components/Filters";
 import AllProjectsButton from "../components/AllProjectsButton";
-
-import "../css/project-page.css"
 import ProjectsList from "../components/ProjectList.tsx";
+
+import "../css/project-page.css";
+
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200";
 
 export default function ProjectsPage() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
+
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
     const [showAll, setShowAll] = useState(false);
@@ -24,20 +27,23 @@ export default function ProjectsPage() {
             });
     }, []);
 
+    console.log("Meine Kategorien aus der DB:", categories);
+
     if (projects.length === 0) return <p className="loading">Lade Projekte …</p>;
 
     const [featured, ...rest] = projects;
 
     const filtered = rest.filter(p => {
         if (selectedCategory && p.category_id !== selectedCategory) return false;
-        if (
-            selectedDate &&
-            new Date(p.created_at).toLocaleDateString("de-DE") !== selectedDate
-        ) return false;
+        if (selectedDate && new Date(p.created_at).toLocaleDateString("de-DE") !== selectedDate) return false;
         return true;
     });
 
     const visible = showAll ? filtered : filtered.slice(0, 4);
+
+    const featuredImage = (featured.image_url && featured.image_url.trim() !== "")
+        ? featured.image_url
+        : DEFAULT_IMAGE;
 
     return (
         <>
@@ -57,11 +63,10 @@ export default function ProjectsPage() {
                     onSelectDate={setSelectedDate}
                 />
 
-                {/* Featured */}
                 <div className="featured-card">
                     <div
                         className="featured-image"
-                        style={{ backgroundImage: `url(${featured.image_url})` }}
+                        style={{ backgroundImage: `url(${featuredImage})` }}
                     >
                         <div className="featured-content">
                             <h2>{featured.titel}</h2>
