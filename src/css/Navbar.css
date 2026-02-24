@@ -1,0 +1,37 @@
+.navbar {
+    background: #0a7a3d;
+    padding: 14px 24px;
+}
+
+.navbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 1.4rem;
+}
+
+.logo-light {
+    font-weight: 300;
+    margin-right: 6px;
+}
+
+.logo-bold {
+    font-weight: 700;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 24px;
+    font-weight: 500;
+}
+
+nav a.active {
+    text-decoration: underline;
+}
