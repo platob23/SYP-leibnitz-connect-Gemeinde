@@ -1,7 +1,9 @@
+import Navbar from "../components/Navbar.tsx";
+
 const test = () => {
     return (
     <>
-        <p>amtstafel</p>
+        <Navbar/>
     </>
     )
 }

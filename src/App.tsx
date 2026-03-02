@@ -8,7 +8,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/start" replace />} />
+                <Route path="/" element={<Navigate to="/projekte" replace />} />
                 <Route path="/start" element={<StartPage/>} />
                 <Route path="/rathaus" element={<RathausPage/>} />
                 <Route path="/amtstafel" element={<AmtstafelPage/>} />

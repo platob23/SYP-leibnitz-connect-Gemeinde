@@ -153,15 +153,11 @@ html, body {
 }
 
 .card-content h3 {
-    font-size: 1rem;
-    margin-bottom: 6px;
     color: #1a1a1a;
 }
 
 .date {
-    font-size: 0.85rem;
     color: #555;
-    margin-bottom: 10px;
 }
 
 /* ===============================
@@ -184,13 +180,22 @@ html, body {
 
 .all-projects-btn {
     background: transparent;
-    border: none;
-    color: #0a7a3d;
+    color: white;
+    border: 2px solid #0a7a3d;
     font-size: 0.95rem;
     font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+.all-projects-btn:hover {
+    background: #0a7a3d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 122, 61, 0.4);
+}
 /* ===============================
    RESPONSIVE BREAKPOINTS
 ================================ */
