@@ -1,21 +1,33 @@
 /* ===============================
-   PAGE WRAPPER
+   GLOBAL & PAGE WRAPPER
 ================================ */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #242424; /* Dark Mode Grundfarbe */
+}
 
 .projects-page {
-    padding: 24px;
-    max-width: 1400px;
-    margin: 0 auto;
+    width: 100%;
+    /* Kleinerer Abstand nach oben zur Navbar */
+    padding: 10px clamp(20px, 6vw, 120px);
+    min-height: 100vh;
+    background-color: #242424;
+    color: white;
 }
 
 /* ===============================
    TITLE + FILTERS
 ================================ */
-
 .projects-page h1 {
     font-size: 2.2rem;
     margin-bottom: 12px;
-    /* Damit man den Titel auf dem dunklen Hintergrund sieht: */
     color: #ffffff;
 }
 
@@ -27,30 +39,48 @@
 }
 
 .filters select {
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 8px;
     border: 1px solid #0a7a3d;
-    background: white;
-    color: #0a7a3d;
+    background: #333; /* Dunkler Hintergrund für Selects */
+    color: #ffffff;
     font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
 }
 
 /* ===============================
    FEATURED PROJECT
 ================================ */
-
 .featured-card {
     width: 100%;
-    margin-bottom: 36px;
-    border-radius: 18px;
-    overflow: hidden;
+    margin-bottom: 48px;
 }
 
 .featured-image {
-    height: 420px;
+    width: 100%;
+    /* Dynamisches Seitenverhältnis statt fixer Höhe */
+    aspect-ratio: 21 / 9;
+    min-height: 300px;
     background-size: cover;
     background-position: center;
     position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+/* Das Datum oben rechts im Bild */
+.featured-date {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 10;
 }
 
 .featured-content {
@@ -58,16 +88,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-
     padding: 32px;
-
     background: linear-gradient(
             to top,
             rgba(255, 255, 255, 0.95),
             rgba(255, 255, 255, 0.3)
     );
-
-    /* Hier war es schon schwarz, das passt: */
     color: #000;
 }
 
@@ -75,24 +101,85 @@
     font-size: 2.1rem;
     font-weight: 600;
     margin-bottom: 10px;
-    color: #000; /* Sicherheitshalber explizit schwarz */
+    color: #000;
 }
 
 .featured-content p {
     max-width: 720px;
     font-size: 1rem;
-    color: #333; /* Dunkelgrau für Text */
+    color: #333;
 }
 
 /* ===============================
-   HEADER ABOVE GRID
+   PROJECT GRID (FLEXBOX FIX)
 ================================ */
-
 .projects-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+}
+
+.projects-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.project-card {
+    /* flex-grow ist 0, damit Bilder beim Zoom nicht riesig werden */
+    flex: 0 1 calc(25% - 20px);
+    min-width: 250px;
+    background: #f4f4f4;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   CARD CONTENT
+================================ */
+.card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-content {
+    padding: 14px;
+}
+
+.card-content h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.details-btn {
+    background: #0a7a3d;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+}
+
+.details-btn:hover {
+    background: #086a35;
 }
 
 .all-projects-btn {
@@ -104,90 +191,36 @@
     cursor: pointer;
 }
 
-.all-projects-btn:hover {
-    text-decoration: underline;
-}
-
 /* ===============================
-   PROJECT GRID (FLEXBOX)
+   RESPONSIVE BREAKPOINTS
 ================================ */
-
-.projects-flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+@media (max-width: 1200px) {
+    .project-card { flex: 0 1 calc(33.33% - 20px); }
 }
 
-.project-card {
-    width: calc(25% - 15px);
-    min-width: 260px;
-    background: #f4f4f4;
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+@media (max-width: 900px) {
+    .project-card { flex: 0 1 calc(50% - 20px); }
 }
 
-/* ===============================
-   CARD CONTENT
-================================ */
+@media (max-width: 600px) {
+    .projects-page { padding: 16px; }
 
-.card-image {
-    height: 180px;
-    background-size: cover;
-    background-position: center;
-}
+    .project-card { flex: 0 1 100%; }
 
-.card-content {
-    padding: 14px;
-}
+    /* Filter nebeneinander statt untereinander (kein Stretch) */
+    .filters {
+        justify-content: space-between;
+    }
 
-/* WICHTIG: Hier die Farbe auf Schwarz geändert */
-.card-content h3 {
-    font-size: 1rem;
-    margin-bottom: 6px;
-    color: #1a1a1a; /* Dunkles Grau/Schwarz für den Titel */
-}
+    .filters select {
+        width: 48%;
+        min-width: unset;
+    }
 
-.date {
-    font-size: 0.85rem;
-    color: #555; /* Mittelgrau, ist auf Weiß gut lesbar */
-    margin-bottom: 10px;
-}
+    .featured-image {
+        aspect-ratio: 16 / 10;
+        height: auto;
+    }
 
-/* ===============================
-   BUTTONS
-================================ */
-
-.details-btn {
-    background: #0a7a3d;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    align-self: flex-start;
-}
-
-.details-btn.small {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-}
-
-.details-btn:hover {
-    background: #086a35;
-}
-
-/* ===============================
-   STATES
-================================ */
-
-.loading,
-.error {
-    padding: 40px;
-    color: white; /* Weißer Text für Ladeanzeige auf dunklem Hintergrund */
-}
-
-.error {
-    color: #ff6b6b;
+    .featured-content h2 { font-size: 1.4rem; }
 }

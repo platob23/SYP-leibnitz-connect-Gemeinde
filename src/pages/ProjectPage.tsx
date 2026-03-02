@@ -27,12 +27,12 @@ export default function ProjectsPage() {
             });
     }, []);
 
-    console.log("Meine Kategorien aus der DB:", categories);
-
     if (projects.length === 0) return <p className="loading">Lade Projekte …</p>;
 
+    // Erstes Projekt als Featured, Rest für die Liste
     const [featured, ...rest] = projects;
 
+    // Filterlogik für die restlichen Projekte
     const filtered = rest.filter(p => {
         if (selectedCategory && p.category_id !== selectedCategory) return false;
         if (selectedDate && new Date(p.created_at).toLocaleDateString("de-DE") !== selectedDate) return false;
@@ -68,6 +68,11 @@ export default function ProjectsPage() {
                         className="featured-image"
                         style={{ backgroundImage: `url(${featuredImage})` }}
                     >
+                        {/* Datum oben rechts im Bild */}
+                        <div className="featured-date">
+                            {new Date(featured.created_at).toLocaleDateString("de-DE")}
+                        </div>
+
                         <div className="featured-content">
                             <h2>{featured.titel}</h2>
                             <p>{featured.text.substring(0, 160)}…</p>

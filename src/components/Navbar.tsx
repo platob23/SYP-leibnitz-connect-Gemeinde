@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../css/Navbar.css";
+import "../css/navbar.css";
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -13,10 +13,10 @@ export default function Navbar() {
                 </div>
 
                 <nav>
-                    <a href="/start" onClick={(e) => {e.preventDefault; navigate("/start")}}>STARTSEITE</a>
-                    <a href="/amtstafel" onClick={(e) => {e.preventDefault; navigate("/amtstafel")}}>AMTSTAFEL</a>
-                    <a href="/rathaus" onClick={(e) => {e.preventDefault; navigate("/rathaus")}}>RATHAUS ▾</a>
-                    <a href="/projekte" onClick={(e) => {e.preventDefault; navigate("/projekte")}} className="active">PROJEKTE</a>
+                    <a href="/start" onClick={() => {navigate("/start")}}>STARTSEITE</a>
+                    <a href="/amtstafel" onClick={() => {navigate("/amtstafel")}}>AMTSTAFEL</a>
+                    <a href="/rathaus" onClick={() => {navigate("/rathaus")}}>RATHAUS ▾</a>
+                    <a href="/projekte" onClick={() => {navigate("/projekte")}} className="active">PROJEKTE</a>
                 </nav>
             </div>
         </header>
