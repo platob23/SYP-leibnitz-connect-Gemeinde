@@ -1,0 +1,100 @@
+.project-detail-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px clamp(20px, 6vw, 120px);
+    background-color: #242424;
+    color: white;
+}
+
+.project-detail-page h1 {
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+.detail-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+}
+
+.detail-image {
+    flex: 0 0 25%;
+    aspect-ratio: 4 / 5;
+    min-height: 350px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 16px;
+}
+
+.detail-content {
+    flex: 1;
+    max-width: 900px;
+}
+
+.detail-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.detail-short-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: 30px;
+    border-left: 4px solid #0a7a3d;
+    padding-left: 16px;
+}
+
+.detail-long-text {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #e6e6e6;
+    white-space: pre-line;
+    margin-bottom: 40px;
+}
+
+.rate-btn {
+    background: #0a7a3d;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.rate-btn:hover {
+    background: #086a35;
+    transform: translateY(-2px);
+}
+
+.rating-icons {
+    margin-top: 22px;
+    display: flex;
+    gap: 22px;
+    font-size: 1.6rem;
+}
+
+.rating-icons span {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.rating-icons span:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 900px) {
+    .detail-container {
+        flex-direction: column;
+    }
+
+    .detail-image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: 250px;
+    }
+}

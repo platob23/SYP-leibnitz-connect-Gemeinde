@@ -3,6 +3,7 @@ import ProjectsPage from "./pages/ProjectPage.tsx";
 import StartPage from "./pages/StartPage.tsx"
 import RathausPage from "./pages/RathausPage.tsx"
 import AmtstafelPage from "./pages/AmtstafelPage.tsx"
+import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
 
 export default function App() {
     return (
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path="/rathaus" element={<RathausPage/>} />
                 <Route path="/amtstafel" element={<AmtstafelPage/>} />
                 <Route path="/projekte" element={<ProjectsPage/>} />
+                <Route path="/projekte/:id" element={<ProjectDetailPage />} />
             </Routes>
         </BrowserRouter>
     );
