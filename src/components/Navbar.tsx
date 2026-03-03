@@ -15,7 +15,7 @@ export default function Navbar() {
                 <nav>
                     <a href="/start" onClick={() => {navigate("/start")}}>STARTSEITE</a>
                     <a href="/amtstafel" onClick={() => {navigate("/amtstafel")}}>AMTSTAFEL</a>
-                    <a href="/rathaus" onClick={() => {navigate("/rathaus")}}>RATHAUS ▾</a>
+                    <a href="/rathaus" onClick={() => {navigate("/rathaus")}}>RATHAUS</a>
                     <a href="/projekte" onClick={() => {navigate("/projekte")}} className="active">PROJEKTE</a>
                 </nav>
             </div>

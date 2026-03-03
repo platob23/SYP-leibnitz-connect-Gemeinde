@@ -44,10 +44,34 @@ nav a {
 }
 
 nav a.active {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-/* Mobile Anpassung */
+nav a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+nav a:hover {
+    color: #d4f5e5;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+
 @media (max-width: 768px) {
     .navbar-inner {
         flex-direction: column;

@@ -128,7 +128,6 @@ html, body {
 }
 
 .project-card {
-    /* flex-grow ist 0, damit Bilder beim Zoom nicht riesig werden */
     flex: 0 1 calc(25% - 20px);
     min-width: 250px;
     background: #f4f4f4;
@@ -136,6 +135,14 @@ html, body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    z-index: 5;
 }
 
 /* ===============================
