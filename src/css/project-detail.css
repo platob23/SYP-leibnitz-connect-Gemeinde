@@ -18,13 +18,24 @@
     gap: 60px;
 }
 
+/* ... dein bestehendes CSS ... */
+
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 100px;
+    color: #ccc;
+}
+
 .detail-image {
     flex: 0 0 25%;
     aspect-ratio: 4 / 5;
     min-height: 350px;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .detail-content {

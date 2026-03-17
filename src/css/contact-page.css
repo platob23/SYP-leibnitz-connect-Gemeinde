@@ -1,0 +1,101 @@
+.contact-page {
+    padding: 40px clamp(20px, 6vw, 120px);
+    background-color: white;
+    min-height: 100vh;
+}
+
+.contact-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #000;
+}
+
+.contact-container {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+.contact-image-wrapper {
+    flex: 1;
+    max-width: 400px;
+}
+
+.contact-main-image {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+}
+
+.contact-form-wrapper {
+    flex: 1.5;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    outline: none;
+    background: transparent;
+    margin-bottom: 20px;
+}
+
+.contact-form textarea {
+    border: 1px solid #c8e1d4;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px; /* Weniger Abstand zur Checkbox */
+}
+
+/* Checkbox nach ganz LINKS */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Schiebt alles nach links */
+    gap: 10px;
+    margin: 15px 0 25px 0; /* Abstand nach oben und unten */
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #066e33;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #045226;
+}
+
+@media (max-width: 900px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    .contact-image-wrapper {
+        max-width: 100%;
+    }
+}

@@ -4,10 +4,10 @@ export type Project = {
     text: string;
     large_description: string;
     category_id: number;
-    status: string;
+    status_id: number;
     created_at: string;
     updated_at: string;
-    image_url?: string | null;
+    image?: string | null;
 };
 
 export type Category = {

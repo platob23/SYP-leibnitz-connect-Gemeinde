@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCategories, getProjects } from "../api/projects";
-import type { Project, Category } from "../types/database";
+import { hexToImageUrl } from "../utils/image";
 
 import Navbar from "../components/Navbar";
 import Filters from "../components/Filters";
@@ -8,10 +9,12 @@ import AllProjectsButton from "../components/AllProjectsButton";
 import ProjectsList from "../components/ProjectList.tsx";
 
 import "../css/project-page.css";
+import type { Category, Project } from "../types/database.ts";
 
 const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200";
 
 export default function ProjectsPage() {
+    const navigate = useNavigate();
     const [projects, setProjects] = useState<Project[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
 
@@ -22,17 +25,21 @@ export default function ProjectsPage() {
     useEffect(() => {
         Promise.all([getProjects(), getCategories()])
             .then(([p, c]) => {
-                setProjects(p);
-                setCategories(c);
-            });
+                setProjects(p as Project[]);
+                setCategories(c as Category[]);
+            })
+            .catch(err => console.error("Fehler beim Laden:", err));
     }, []);
 
     if (projects.length === 0) return <p className="loading">Lade Projekte …</p>;
 
-    // Erstes Projekt als Featured, Rest für die Liste
-    const [featured, ...rest] = projects;
+    // Filter auf status_id 2 (als Zahl)
+    // Falls deine DB-Spalte wirklich "staus_id" ohne 't' heißt,
+    // dann ändere es hier zurück, aber lass den Vergleich bei == (oder Typ number).
+    const published = projects.filter(p => Number(p.status_id) === 2);
 
-    // Filterlogik für die restlichen Projekte
+    const [featured, ...rest] = published;
+
     const filtered = rest.filter(p => {
         if (selectedCategory && p.category_id !== selectedCategory) return false;
         if (selectedDate && new Date(p.created_at).toLocaleDateString("de-DE") !== selectedDate) return false;
@@ -41,14 +48,13 @@ export default function ProjectsPage() {
 
     const visible = showAll ? filtered : filtered.slice(0, 4);
 
-    const featuredImage = (featured.image_url && featured.image_url.trim() !== "")
-        ? featured.image_url
+    const featuredImageUrl = (featured && featured.image)
+        ? hexToImageUrl(featured.image) || DEFAULT_IMAGE
         : DEFAULT_IMAGE;
 
     return (
         <>
             <Navbar />
-
             <div className="projects-page">
                 <h1>Projekte & Entwicklungen in Leibnitz</h1>
 
@@ -56,29 +62,39 @@ export default function ProjectsPage() {
                     categories={categories}
                     selectedCategory={selectedCategory}
                     onSelectCategory={setSelectedCategory}
-                    dates={[...new Set(projects.map(p =>
+                    dates={[...new Set(published.map(p =>
                         new Date(p.created_at).toLocaleDateString("de-DE")
                     ))]}
                     selectedDate={selectedDate}
                     onSelectDate={setSelectedDate}
                 />
 
-                <div className="featured-card">
-                    <div
-                        className="featured-image"
-                        style={{ backgroundImage: `url(${featuredImage})` }}
-                    >
-                        {/* Datum oben rechts im Bild */}
-                        <div className="featured-date">
-                            {new Date(featured.created_at).toLocaleDateString("de-DE")}
-                        </div>
-
-                        <div className="featured-content">
-                            <h2>{featured.titel}</h2>
-                            <p>{featured.text.substring(0, 160)}…</p>
+                {featured ? (
+                    <div className="featured-card">
+                        <div
+                            className="featured-image"
+                            style={{ backgroundImage: `url(${featuredImageUrl})` }}
+                        >
+                            <div className="featured-date">
+                                {new Date(featured.created_at).toLocaleDateString("de-DE")}
+                            </div>
+                            <div className="featured-content">
+                                <div className="featured-text-group">
+                                    <h2>{featured.titel}</h2>
+                                    <p>{featured.text.substring(0, 160)}…</p>
+                                </div>
+                                <button
+                                    className="details-btn featured-details-btn"
+                                    onClick={() => navigate(`/projekte/${featured.id}`)}
+                                >
+                                    Mehr Details →
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <p>Aktuell keine veröffentlichten Projekte verfügbar.</p>
+                )}
 
                 <div className="projects-header">
                     <span />

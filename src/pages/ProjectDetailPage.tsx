@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import type { Project } from "../types/database";
+import { hexToImageUrl } from "../utils/image";
+import { supabase } from "../api/supabaseClient.ts";
 import "../css/project-detail.css";
-import {supabase} from "../api/supabaseClient.ts";
 
-const DEFAULT_IMAGE =
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200";
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200";
 
 export default function ProjectDetailPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [project, setProject] = useState<Project | null>(null);
 
     useEffect(() => {
@@ -21,9 +22,9 @@ export default function ProjectDetailPage() {
                 .single();
 
             if (error) {
-                console.error(error);
+                console.error("Fehler beim Laden des Projekts:", error);
             } else {
-                setProject(data);
+                setProject(data as Project);
             }
         }
 
@@ -35,53 +36,41 @@ export default function ProjectDetailPage() {
             <>
                 <Navbar />
                 <div className="project-detail-page">
-                    <p>Lade Projekt...</p>
+                    <p className="loading">Lade Projektdetails...</p>
                 </div>
             </>
         );
     }
 
-    const image =
-        project.image_url && project.image_url.trim() !== ""
-            ? project.image_url
-            : DEFAULT_IMAGE;
+    const imageUrl = project.image
+        ? hexToImageUrl(project.image) || DEFAULT_IMAGE
+        : DEFAULT_IMAGE;
 
     return (
         <>
             <Navbar />
-
             <div className="project-detail-page">
                 <h1>Projekte & Entwicklungen in Leibnitz</h1>
-
                 <div className="detail-container">
-                    {/* LINKES BILD */}
                     <div
                         className="detail-image"
-                        style={{ backgroundImage: `url(${image})` }}
+                        style={{ backgroundImage: `url(${imageUrl})` }}
                     />
-
-                    {/* RECHTE SEITE */}
                     <div className="detail-content">
                         <h2>{project.titel}</h2>
-
-                        {/* Kurzbeschreibung */}
-                        <p className="detail-short-text">
-                            {project.text}
-                        </p>
-
-                        {/* Langbeschreibung */}
+                        <p className="detail-short-text">{project.text}</p>
                         <div className="detail-long-text">
-                            {project.large_description ||
-                                "Keine ausführliche Beschreibung vorhanden."}
+                            {project.large_description || "Keine ausführliche Beschreibung vorhanden."}
                         </div>
-
-                        <button className="rate-btn">
-                            Bewerten →
+                        <button
+                            className="rate-btn"
+                            onClick={() => navigate(`/projekte/${project.id}/kontakt`)}
+                        >
+                            Bewerten
                         </button>
-
                         <div className="rating-icons">
-                            <span>👍</span>
-                            <span>👎</span>
+                            <span role="img" aria-label="like">👍</span>
+                            <span role="img" aria-label="dislike">👎</span>
                         </div>
                     </div>
                 </div>
