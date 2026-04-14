@@ -13,8 +13,8 @@ export default function ProjectsList({ projects }: Props) {
     const navigate = useNavigate();
 
     const getImage = (p: Project) =>
-        p.image_url && p.image_url.trim() !== ""
-            ? p.image_url
+        p.image && p.image.trim() !== ""
+            ? p.image
             : DEFAULT_IMAGE;
 
     return (
