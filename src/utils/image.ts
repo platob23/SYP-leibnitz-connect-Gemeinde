@@ -1,24 +1,30 @@
-// utils/image.ts
-
 export function hexToImageUrl(hexString: string | null | undefined): string {
     if (!hexString) return "";
 
     try {
-        // 1. Supabase-Präfix "\x" entfernen, falls vorhanden
-        const hex = hexString.replace(/^\\x/, '');
+        const hex = hexString.replace(/^\\x/, "").replace(/^0x/i, "");
 
-        // 2. Hex-String in ein Array aus 2-Zeichen-Blöcken aufteilen
         const match = hex.match(/.{1,2}/g);
         if (!match) return "";
 
-        // 3. In Bytes und dann in einen binären String umwandeln
         const bytes = new Uint8Array(match.map(b => parseInt(b, 16)));
-        const binary = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
 
-        // 4. Base64 Data-URL zurückgeben (hier als jpeg formatiert, deckt meist auch png/webp ab)
-        return `data:image/jpeg;base64,${btoa(binary)}`;
+        // Dateityp aus Magic Bytes erkennen
+        let mimeType = "image/jpeg";
+        if (bytes[0] === 0x89 && bytes[1] === 0x50) mimeType = "image/png";
+        else if (bytes[0] === 0x47 && bytes[1] === 0x49) mimeType = "image/gif";
+        else if (bytes[0] === 0x52 && bytes[1] === 0x49) mimeType = "image/webp";
+
+        // Sicheres btoa für große Daten
+        let binary = "";
+        const chunkSize = 8192;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+            binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+        }
+
+        return `data:${mimeType};base64,${btoa(binary)}`;
     } catch (error) {
-        console.error("Fehler beim Konvertieren des Bildes:", error);
-        return ""; // Fallback, falls der String ungültig ist
+        console.error("Fehler beim Konvertieren:", error);
+        return "";
     }
 }

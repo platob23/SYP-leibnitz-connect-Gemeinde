@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Project } from "../types/database";
+import { hexToImageUrl } from "../utils/image";
 import "../css/project-page.css";
 
 const DEFAULT_IMAGE =
@@ -13,9 +14,7 @@ export default function ProjectsList({ projects }: Props) {
     const navigate = useNavigate();
 
     const getImage = (p: Project) =>
-        p.image && p.image.trim() !== ""
-            ? p.image
-            : DEFAULT_IMAGE;
+        p.image ? hexToImageUrl(p.image) || DEFAULT_IMAGE : DEFAULT_IMAGE; // <-- fix
 
     return (
         <div className="projects-flex">
@@ -25,20 +24,14 @@ export default function ProjectsList({ projects }: Props) {
                         className="card-image"
                         style={{ backgroundImage: `url(${getImage(p)})` }}
                     />
-
                     <div className="card-content">
                         <h3>{p.titel}</h3>
-
                         <p className="card-text">
-                            {p.text.length > 120
-                                ? p.text.slice(0, 120) + "..."
-                                : p.text}
+                            {p.text.length > 120 ? p.text.slice(0, 120) + "..." : p.text}
                         </p>
-
                         <p className="date">
                             {new Date(p.created_at).toLocaleDateString("de-DE")}
                         </p>
-
                         <button
                             className="details-btn"
                             onClick={() => navigate(`/projekte/${p.id}`)}
