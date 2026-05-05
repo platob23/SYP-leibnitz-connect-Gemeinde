@@ -14,3 +14,14 @@ export type Category = {
     id: number;
     name: string;
 };
+
+export type Formular = {
+    id: number;
+    project_id: number | null;
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+    newsletter: boolean;
+    created_at: string;
+};

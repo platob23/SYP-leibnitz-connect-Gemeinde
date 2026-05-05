@@ -54,16 +54,36 @@
     border-radius: 15px;
     padding: 15px;
     margin-top: 10px;
-    margin-bottom: 10px; /* Weniger Abstand zur Checkbox */
+    margin-bottom: 10px;
+}
+
+/* Pflichtfeld-Validierung nach Submit */
+.contact-form.was-submitted input:invalid,
+.contact-form.was-submitted textarea:invalid {
+    border-color: #e53e3e;
+    background-color: #fff5f5;
+}
+
+.contact-form.was-submitted input:invalid {
+    border-bottom: 1px solid #e53e3e;
+}
+
+.contact-form.was-submitted textarea:invalid {
+    border: 1px solid #e53e3e;
+}
+
+.contact-form.was-submitted input:invalid::placeholder,
+.contact-form.was-submitted textarea:invalid::placeholder {
+    color: #e53e3e;
 }
 
 /* Checkbox nach ganz LINKS */
 .checkbox-group {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Schiebt alles nach links */
+    justify-content: flex-start;
     gap: 10px;
-    margin: 15px 0 25px 0; /* Abstand nach oben und unten */
+    margin: 15px 0 25px 0;
     font-size: 0.9rem;
     color: #444;
 }
