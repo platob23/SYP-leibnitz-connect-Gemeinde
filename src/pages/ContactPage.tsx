@@ -43,8 +43,9 @@ export default function ContactPage() {
         e.preventDefault();
         setSubmitted(true);
 
-        if (!name || !email || !message) {
-            console.log("Pflichtfelder fehlen");
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!name || !email || !message || !emailRegex.test(email)) {
             return;
         }
 
@@ -70,6 +71,7 @@ export default function ContactPage() {
             console.error("Fehler:", err);
         }
     }
+
     return (
         <>
             <Navbar />

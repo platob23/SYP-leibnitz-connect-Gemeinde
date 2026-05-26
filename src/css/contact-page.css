@@ -77,6 +77,16 @@
     color: #e53e3e;
 }
 
+/* Email-Format-Fehler */
+.contact-form.was-submitted input[type="email"]:not(:placeholder-shown):invalid {
+    border-bottom: 2px solid #e53e3e;
+    background-color: #fff5f5;
+}
+
+.contact-form.was-submitted input[type="email"]:not(:placeholder-shown):invalid::placeholder {
+    color: #e53e3e;
+}
+
 /* Checkbox nach ganz LINKS */
 .checkbox-group {
     display: flex;
@@ -94,7 +104,6 @@
     margin: 0;
     cursor: pointer;
 }
-
 .submit-btn {
     width: 100%;
     background-color: #066e33;
